@@ -1,0 +1,33 @@
+
+header {
+    background-color: blueviolet;
+
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+footer {
+    background-color: blueviolet;
+    padding: 0.5rem 2rem;
+    text-align: center;
+}
+
+body {
+    background-color: rgb(52, 133, 255);
+    margin: 0;
+}
+
+article {
+    background-color: blue;
+    padding: 2rem;
+    margin: 1rem 30%;
+    color: white;
+}
+
+article h2 {
+    text-align: center;
+}
+
+article p {
+    text-align: justify;
+}
