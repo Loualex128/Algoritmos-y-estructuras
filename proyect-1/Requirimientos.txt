@@ -1,0 +1,22 @@
+Desarrollar un programa en Java con su respectiva GUI en donde al ingresar un numero entre el
+1 y 9 en un campo de texto permita construir una matriz de N x N de numeros random de hasta 3
+digitos enteros positivos y negativos, ademas que muestre las siguientes operaciones
+
+* Elementos ordenados de menor a mayor mostrados en forma de vector
+* Multiplicacion de los elementos de la diagonal principal
+* Resultado de la multiplicacion de la diagonal principal invertido
+* Promedio de la suma de la diagonal secundaria
+* Potencia del elemento mayor elevado al elemento menor positivo
+
+La interfaz no debe tener ventanas emergentes y se debe visualizar la matriz
+y operaciones en una sola ventana
+
+El programa debe mostrar un boton que limpie toda la ventana
+de modo que pueda ejecutarse una nueva operacion.
+
+Mientras no se presione ese boton el cambo de texto donde
+se ingresa el valor de N y el boton de calcular las operaciones
+y desarrollar la matriz debe quedar Deshabilitado.
+
+El campo de texto debe estar validado es decir,
+Que solo permita valores numericos entre 1 y 9

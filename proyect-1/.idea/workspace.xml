@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7de18d39-3c42-462c-8cbf-e55e9fe211a8" name="Changes" comment="" />
+    <list default="true" id="7de18d39-3c42-462c-8cbf-e55e9fe211a8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Proyect-Algorythm-1/out/production/Proyect-Algorythm-1/Principal/Principal.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Proyect-Algorythm-1/out/production/Proyect-Algorythm-1/Principal/Principal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Proyect-Algorythm-1/src/Principal/Principal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Proyect-Algorythm-1/src/Principal/Principal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,13 +20,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/loualex/Algoritmos y estructuras/proyect-1"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/loualex/Algoritmos y estructuras/proyect-1&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -33,5 +37,16 @@
       <updated>1654788130995</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
