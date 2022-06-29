@@ -4,14 +4,14 @@ import Methods.Algoritmos;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Principal extends JFrame implements ActionListener {
-
-    int N;
     JTextField fieldN;
     JTextArea areaOrderedElements, areaDiagonalPrincipal, areaDiagonalInvertida,
-              areaDiagonalSecundaria, areaPotencia;
-    JScrollPane scrollOrder, scrollDiagonalPrin, scrollDiagonalInv, scrollDiagonalSec, scrollPotencia;
+            areaDiagonalSecundaria, areaPotencia;
+    JScrollPane scrollOrder, scrollDiagonalPrin, scrollDiagonalInv, scrollDiagonalSec, scrollPotencia, scrollMatriz;
     JTextArea areaMatriz;
     JButton buttonClear, buttonCalculate;
     JLabel labelOrderedElements, labelDiagonalPrincipal, labelDiagonalInvertida,
@@ -84,19 +84,31 @@ public class Principal extends JFrame implements ActionListener {
         add(scrollPotencia);
 
         fieldN = new JTextField();
-        fieldN.setBounds(320,50,150,30);
+        fieldN.setBounds(320,50,30,30);
+        fieldN.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent k) {
+                int key = k.getKeyChar();
+                boolean validarNumero = key >= 49 && key <= 57;
+                if (!validarNumero) k.consume();
+                if (fieldN.getText().trim().length() == 1) k.consume();
+            }
+        });
         add(fieldN);
 
         areaMatriz = new JTextArea();
-        areaMatriz.setBounds(20, 100,300,300);
-        add(areaMatriz);
+        scrollMatriz = new JScrollPane(areaMatriz);
+        scrollMatriz.setBounds(20, 100,300,300);
+        add(scrollMatriz);
 
         buttonCalculate = new JButton("Calcular!");
         buttonCalculate.setBounds(20,420,100,30);
+        buttonCalculate.addActionListener(this);
         add(buttonCalculate);
 
         buttonClear = new JButton("Limpiar");
         buttonClear.setBounds(220,420,100,30);
+        buttonClear.addActionListener(this);
         add(buttonClear);
     }
 
@@ -106,8 +118,120 @@ public class Principal extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
+    public void actionPerformed(ActionEvent e) {
 
-        //areaMatriz.setText(metodo.crearMatriz(4));
+        if (e.getSource() == buttonCalculate){
+            int n = Integer.parseInt(fieldN.getText());
+            String matrizI = "     -------------------------\n      -----  Matriz  ----- \n     -------------------------\n";
+            String elementosOrdenados = "";
+            String diagonalPrincipal = "";
+            String diagonaInvertida = "";
+            String diagonalSecundaria = "";
+            String stringPotencia = "";
+
+            int matriz [][] = new int[n][n];
+            int matrizClon [][] = new int[n][n];
+            int vectorElementos [] = new int[n*n];
+
+            //Rellenar matriz
+            for (int i = 0; i < matriz.length; i++){
+                for (int j = 0; j < matriz.length; j++){
+                    matriz[i][j] = (int) (Math.random()*999);
+                    matrizClon[i][j] = matriz[i][j];
+                }
+            }
+            for (int i = 0; i < matriz.length; i++){
+                matrizI += "\n\n";
+                for (int j = 0; j < matriz.length; j++){
+                    matrizClon[i][j] = matriz[i][j];
+                    matrizI += "   " + matriz[i][j];
+                }
+            }
+
+            //Ordenar Matriz
+            for (int i = 0; i < matrizClon.length; i++){
+                for (int j = 0; j < matrizClon.length; j++){
+                    for (int x = 0; x < matrizClon.length; x++){
+                        for (int y = 0; y < matrizClon.length; y++){
+                            if (matrizClon[i][j] < matrizClon[x][y]){
+                                int t = matriz[i][j];
+                                matrizClon[i][j] = matrizClon[x][y];
+                                matrizClon[x][y] = t;
+                            }
+                        }
+                    }
+                }
+            }
+
+            int cont = 0;
+            for (int i = 0; i < matrizClon.length; i++){
+                for (int j = 0; j < matrizClon.length; j++){
+                    vectorElementos [cont] = matrizClon [i][j];
+                    cont++;
+                }
+            }
+
+            for (int i = 0; i < vectorElementos.length; i++){
+                elementosOrdenados += "[" + vectorElementos[i] + "]";
+            }
+
+            //Multiplicar diagonal principal
+            int productoDiagonal = matriz[0][0];
+            for (int i = 0; i < matriz.length; i++){
+                for (int j = 0; j < matriz.length; j++){
+                    if (i == j){
+                        productoDiagonal *= matriz[i][j];
+                    }
+                }
+            }
+            diagonalPrincipal = Integer.toString(productoDiagonal);
+
+            //Invertir Resultado de la diagonal principal
+            StringBuilder str = new StringBuilder(diagonalPrincipal);
+            diagonaInvertida = str.reverse().toString();
+
+            //Sumar diagonal secundaria
+            int sumaDiagonalSec = 0;
+            cont = 0;
+            for (int i = 0; i < matriz.length; i++){
+                for (int j = 0; j < matriz.length; j++){
+                    if (i+j == matriz.length-1){
+                        sumaDiagonalSec += matriz[i][j];
+                        cont++;
+                    }
+                }
+            }
+            int promedioDiagonalSec = sumaDiagonalSec / cont;
+            diagonalSecundaria = Integer.toString(promedioDiagonalSec);
+
+            //Potencia
+            double numMayor = matrizClon[0][0];
+            double numMenor = matriz[n-1][n-1];
+            int potencia = (int) (Math.pow(numMayor,numMenor));
+            stringPotencia = Integer.toString(potencia);
+
+            //Asignacion de resultados
+            areaMatriz.setText(matrizI);
+            areaOrderedElements.setText(elementosOrdenados);
+            areaDiagonalPrincipal.setText(diagonalPrincipal);
+            areaDiagonalInvertida.setText(diagonaInvertida);
+            areaDiagonalSecundaria.setText(diagonalSecundaria);
+            areaPotencia.setText(stringPotencia);
+
+            //Deshabilitar campo de Texto N
+            fieldN.setEnabled(false);
+
+        }
+
+        if (e.getSource() == buttonClear){
+            fieldN.setText("");
+            areaDiagonalPrincipal.setText("");
+            areaDiagonalInvertida.setText("");
+            areaMatriz.setText("");
+            areaPotencia.setText("");
+            areaDiagonalSecundaria.setText("");
+            areaOrderedElements.setText("");
+            fieldN.setEnabled(true);
+        }
     }
 }
