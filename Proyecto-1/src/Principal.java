@@ -1,11 +1,12 @@
-package GUI;
-
-import Methods.Algoritmos;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.util.Arrays;
 
 public class Principal extends JFrame implements ActionListener {
     JTextField fieldN;
@@ -16,75 +17,76 @@ public class Principal extends JFrame implements ActionListener {
     JButton buttonClear, buttonCalculate;
     JLabel labelOrderedElements, labelDiagonalPrincipal, labelDiagonalInvertida,
             labelDiagonalSecundaria, labelPotencia, labelN, labelWelcome;
-    Algoritmos metodo;
     public Principal(){
         setLayout(null);
-        setSize(1200,600);
+        setSize(660,700);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(0, 225, 255));
 
 
-        labelWelcome = new JLabel("Bienvenido a Matriz Calculator!");
-        labelWelcome.setBounds(200,20,300,30);
+        labelWelcome = new JLabel("¡Bienvenido a Calculadora de Matrices!");
+        labelWelcome.setBounds(20,20,700,30);
+        labelWelcome.setFont(new Font("Arial", Font.BOLD,28));
         add(labelWelcome);
 
-        labelN = new JLabel("Numero de filas y columnas de la matriz: ");
-        labelN.setBounds(20,50,400,30);
+        labelN = new JLabel("Numero de filas y columnas de la matriz ");
+        labelN.setBounds(20,60,400,30);
         add(labelN);
 
         labelOrderedElements = new JLabel("Elementos ordenados de mayor a menor:");
-        labelOrderedElements.setBounds(340,100,300,30);
+        labelOrderedElements.setBounds(20,420,300,30);
         add(labelOrderedElements);
 
         labelDiagonalPrincipal = new JLabel("Multiplicacion de la diagonal principal:");
-        labelDiagonalPrincipal.setBounds(340,140,300,30);
+        labelDiagonalPrincipal.setBounds(20,460,300,30);
         add(labelDiagonalPrincipal);
 
         labelDiagonalInvertida = new JLabel("Multiplicacion diagonal principal invertida:");
-        labelDiagonalInvertida.setBounds(340,180,300,30);
+        labelDiagonalInvertida.setBounds(20,500,300,30);
         add(labelDiagonalInvertida);
 
         labelDiagonalSecundaria = new JLabel("Promedio de la suma de la diagonal secundaria:");
-        labelDiagonalSecundaria.setBounds(340,220,400,30);
+        labelDiagonalSecundaria.setBounds(20,540,400,30);
         add(labelDiagonalSecundaria);
 
         labelPotencia = new JLabel("Potencia del elemento mayor elevado al menor positivo:");
-        labelPotencia.setBounds(340,260,400,30);
+        labelPotencia.setBounds(20,580,400,30);
         add(labelPotencia);
 
         areaOrderedElements = new JTextArea();
         areaOrderedElements.setEditable(false);
         scrollOrder = new JScrollPane(areaOrderedElements);
-        scrollOrder.setBounds(760,100,200,30);
+        scrollOrder.setBounds(420,420,200,30);
         add(scrollOrder);
 
         areaDiagonalPrincipal = new JTextArea();
         areaDiagonalPrincipal.setEditable(false);
         scrollDiagonalPrin = new JScrollPane(areaDiagonalPrincipal);
-        scrollDiagonalPrin.setBounds(760,140,200,30);
+        scrollDiagonalPrin.setBounds(420,460,200,30);
         add(scrollDiagonalPrin);
 
         areaDiagonalInvertida = new JTextArea();
         areaDiagonalInvertida.setEditable(false);
         scrollDiagonalInv = new JScrollPane(areaDiagonalInvertida);
-        scrollDiagonalInv.setBounds(760,180,200,30);
+        scrollDiagonalInv.setBounds(420,500,200,30);
         add(scrollDiagonalInv);
 
         areaDiagonalSecundaria = new JTextArea();
         areaDiagonalSecundaria.setEditable(false);
         scrollDiagonalSec = new JScrollPane(areaDiagonalSecundaria);
-        scrollDiagonalSec.setBounds(760,220,200,30);
+        scrollDiagonalSec.setBounds(420,540,200,30);
         add(scrollDiagonalSec);
 
         areaPotencia = new JTextArea();
         areaPotencia.setEditable(false);
         scrollPotencia = new JScrollPane(areaPotencia);
-        scrollPotencia.setBounds(760,260,200,30);
+        scrollPotencia.setBounds(420,580,200,30);
         add(scrollPotencia);
 
         fieldN = new JTextField();
-        fieldN.setBounds(320,50,30,30);
+        fieldN.setBounds(320,60,30,30);
         fieldN.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent k) {
@@ -97,17 +99,18 @@ public class Principal extends JFrame implements ActionListener {
         add(fieldN);
 
         areaMatriz = new JTextArea();
+        areaMatriz.setEditable(false);
         scrollMatriz = new JScrollPane(areaMatriz);
-        scrollMatriz.setBounds(20, 100,300,300);
+        scrollMatriz.setBounds(20, 100,600,300);
         add(scrollMatriz);
 
         buttonCalculate = new JButton("Calcular!");
-        buttonCalculate.setBounds(20,420,100,30);
+        buttonCalculate.setBounds(225,620,100,30);
         buttonCalculate.addActionListener(this);
         add(buttonCalculate);
 
         buttonClear = new JButton("Limpiar");
-        buttonClear.setBounds(220,420,100,30);
+        buttonClear.setBounds(330,620,100,30);
         buttonClear.addActionListener(this);
         add(buttonClear);
     }
@@ -117,12 +120,16 @@ public class Principal extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    public static String eliminarNotaciónCientifica(BigInteger numero) {
+        return new DecimalFormat("#.####################################").format(numero);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == buttonCalculate){
             int n = Integer.parseInt(fieldN.getText());
-            String matrizI = "     -------------------------\n      -----  Matriz  ----- \n     -------------------------\n";
+            String matrizI = "\t     -------------------------\n\t      -----  Matriz  ----- \n\t     -------------------------\n";
             String elementosOrdenados = "";
             String diagonalPrincipal = "";
             String diagonaInvertida = "";
@@ -130,57 +137,43 @@ public class Principal extends JFrame implements ActionListener {
             String stringPotencia = "";
 
             int matriz [][] = new int[n][n];
-            int matrizClon [][] = new int[n][n];
             int vectorElementos [] = new int[n*n];
+            BigInteger pot;
 
             //Rellenar matriz
             for (int i = 0; i < matriz.length; i++){
                 for (int j = 0; j < matriz.length; j++){
                     matriz[i][j] = (int) (Math.random()*999);
-                    matrizClon[i][j] = matriz[i][j];
                 }
             }
+
+            //Copiar y convertir matriz a string
             for (int i = 0; i < matriz.length; i++){
                 matrizI += "\n\n";
                 for (int j = 0; j < matriz.length; j++){
-                    matrizClon[i][j] = matriz[i][j];
-                    matrizI += "   " + matriz[i][j];
+                    matrizI += "\t" + matriz[i][j];
                 }
             }
 
-            //Ordenar Matriz
-            for (int i = 0; i < matrizClon.length; i++){
-                for (int j = 0; j < matrizClon.length; j++){
-                    for (int x = 0; x < matrizClon.length; x++){
-                        for (int y = 0; y < matrizClon.length; y++){
-                            if (matrizClon[i][j] < matrizClon[x][y]){
-                                int t = matriz[i][j];
-                                matrizClon[i][j] = matrizClon[x][y];
-                                matrizClon[x][y] = t;
-                            }
-                        }
-                    }
-                }
-            }
-
+            //Ordenar elementos en el vector
             int cont = 0;
-            for (int i = 0; i < matrizClon.length; i++){
-                for (int j = 0; j < matrizClon.length; j++){
-                    vectorElementos [cont] = matrizClon [i][j];
+            for (int i = 0; i < matriz.length; i++){
+                for (int j = 0; j < matriz.length; j++){
+                    vectorElementos [cont] = matriz [i][j];
                     cont++;
                 }
             }
-
+            Arrays.sort(vectorElementos);
             for (int i = 0; i < vectorElementos.length; i++){
-                elementosOrdenados += "[" + vectorElementos[i] + "]";
+                elementosOrdenados += "" + vectorElementos[i] + ", ";
             }
 
             //Multiplicar diagonal principal
-            int productoDiagonal = matriz[0][0];
+            int productoDiagonal = 1;
             for (int i = 0; i < matriz.length; i++){
                 for (int j = 0; j < matriz.length; j++){
                     if (i == j){
-                        productoDiagonal *= matriz[i][j];
+                        productoDiagonal = productoDiagonal * matriz[i][j];
                     }
                 }
             }
@@ -205,10 +198,11 @@ public class Principal extends JFrame implements ActionListener {
             diagonalSecundaria = Integer.toString(promedioDiagonalSec);
 
             //Potencia
-            double numMayor = matrizClon[0][0];
-            double numMenor = matriz[n-1][n-1];
+            double numMenor = vectorElementos[0];
+            double numMayor = vectorElementos[vectorElementos.length - 1];
             int potencia = (int) (Math.pow(numMayor,numMenor));
-            stringPotencia = Integer.toString(potencia);
+            pot = BigInteger.valueOf(potencia);
+            stringPotencia = "" + eliminarNotaciónCientifica(pot);
 
             //Asignacion de resultados
             areaMatriz.setText(matrizI);
@@ -223,6 +217,7 @@ public class Principal extends JFrame implements ActionListener {
 
         }
 
+        //Limpiar campos y habilitar FieldN
         if (e.getSource() == buttonClear){
             fieldN.setText("");
             areaDiagonalPrincipal.setText("");
