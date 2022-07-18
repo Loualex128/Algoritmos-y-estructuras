@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Algoritmos-y-estructuras.iml" filepath="$PROJECT_DIR$/.idea/Algoritmos-y-estructuras.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Proyect-2/Proyect-2.iml" filepath="$PROJECT_DIR$/Proyect-2/Proyect-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Proyect-Algorythm-1/Proyect-Algorythm-1.iml" filepath="$PROJECT_DIR$/Proyect-Algorythm-1/Proyect-Algorythm-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Proyecto-1/Proyecto-1.iml" filepath="$PROJECT_DIR$/Proyecto-1/Proyecto-1.iml" />
+    </modules>
+  </component>
+</project>
