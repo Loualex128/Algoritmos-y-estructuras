@@ -11,6 +11,14 @@ public class Principal extends JFrame implements ActionListener {
     JTextArea areaPrimo, areaFibonacci, areaPotencia, areaSuma, areaFactorial;
     JScrollPane scrollPrimo, scrollFibonacci, scrollPotencia, scrollSuma, scrollFactorial;
     JButton buttonCalculate, buttonClear;
+    int M = 0, N = 0;
+    String strPrimo = "";
+    int divisor = 1;
+    int contador = 0;
+    int num1 = 0;
+    int num2 = 1;
+    int result = 0;
+
     public Principal(){
         setLayout(null);
         setSize(455, 470);
@@ -95,10 +103,12 @@ public class Principal extends JFrame implements ActionListener {
 
         buttonCalculate = new JButton("Calcular");
         buttonCalculate.setBounds(120,380,100,30);
+        buttonCalculate.addActionListener(this);
         add(buttonCalculate);
 
         buttonClear = new JButton("Limpiar");
         buttonClear.setBounds(240,380,100,30);
+        buttonClear.addActionListener(this);
         add(buttonClear);
     }
 
@@ -107,10 +117,40 @@ public class Principal extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    public void CalcularPrimo() {
+        if (divisor <= M){
+            if((M % divisor) == 0){
+                contador++;
+                divisor++;
+                CalcularPrimo();
+            } else {
+                divisor++;
+                CalcularPrimo();
+            }
+        } else {
+            if (contador == 2){
+                strPrimo = "El numero " + M + ", es un numero primo";
+            } else {
+                strPrimo = "El numero " + M + ", no es un numero primo";
+            }
+        }
+        contador = 0;
+        divisor = 1;
+    }
+
+    public void  SecuenciaFibonacci(){
+
+        if (result < N){}
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == buttonCalculate){
+            N = Integer.parseInt(fieldN.getText());
+            M = Integer.parseInt(fieldM.getText());
+            CalcularPrimo();
+            areaPrimo.setText(strPrimo);
 
             fieldN.setEnabled(false);
             fieldM.setEnabled(false);
@@ -118,6 +158,7 @@ public class Principal extends JFrame implements ActionListener {
 
         if(e.getSource() == buttonClear){
             fieldN.setText("");
+            fieldM.setText("");
             areaPrimo.setText("");
             areaFibonacci.setText("");
             areaPotencia.setText("");
