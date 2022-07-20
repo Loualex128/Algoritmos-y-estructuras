@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigInteger;
 
 public class Principal extends JFrame implements ActionListener {
 
@@ -12,12 +13,12 @@ public class Principal extends JFrame implements ActionListener {
     JScrollPane scrollPrimo, scrollFibonacci, scrollPotencia, scrollSuma, scrollFactorial;
     JButton buttonCalculate, buttonClear;
     int M = 0, N = 0;
-    String strPrimo = "";
-    int divisor = 1;
-    int contador = 0;
-    int num1 = 0;
-    int num2 = 1;
-    int result = 0;
+    String strPrimo = "", strFibonacci = "0, ", strPotencia = "", strFactorial = "";
+    int divisor = 1, multiplicador = 1, aux = 1, contador = 0;
+    int num1 = 0, num2 = 1, result = 0;
+    int potencia = 0;
+    BigInteger BigFactorial = BigInteger.ZERO;
+    BigInteger BigPotencia = BigInteger.ZERO;
 
     public Principal(){
         setLayout(null);
@@ -140,7 +141,47 @@ public class Principal extends JFrame implements ActionListener {
 
     public void  SecuenciaFibonacci(){
 
-        if (result < N){}
+        if ((num1 + num2) < N){
+            result = num1 + num2;
+            strFibonacci += result + ", ";
+            num1 = num2;
+            num2 = result;
+            SecuenciaFibonacci();
+        } else {
+            num1 = 0;
+            num2 = 1;
+            result = 0;
+        }
+    }
+
+    public void PotenciaNxM(){
+        if (contador < M){
+            aux *= N;
+            contador++;
+            PotenciaNxM();
+        } else {
+            BigPotencia = BigPotencia.add(BigInteger.valueOf(aux));
+            strPotencia = "" + BigPotencia;
+            aux = 1;
+            contador = 0;
+            BigPotencia = BigInteger.ZERO;
+        }
+    }
+
+    public void CalcularFactorial(){
+        if(contador < N){
+           aux *= multiplicador;
+           contador++;
+           multiplicador++;
+           CalcularFactorial();
+        } else {
+            BigFactorial = BigFactorial.add(BigInteger.valueOf(aux));
+            strFactorial = "" + BigFactorial;
+            contador = 0;
+            multiplicador = 1;
+            aux = 1;
+            BigFactorial = BigInteger.ZERO;
+        }
     }
 
     @Override
@@ -150,7 +191,13 @@ public class Principal extends JFrame implements ActionListener {
             N = Integer.parseInt(fieldN.getText());
             M = Integer.parseInt(fieldM.getText());
             CalcularPrimo();
+            SecuenciaFibonacci();
+            PotenciaNxM();
+            CalcularFactorial();
             areaPrimo.setText(strPrimo);
+            areaFibonacci.setText(strFibonacci);
+            areaPotencia.setText(strPotencia);
+            areaFactorial.setText(strFactorial);
 
             fieldN.setEnabled(false);
             fieldM.setEnabled(false);
