@@ -2,74 +2,90 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigInteger;
 
 public class Principal extends JFrame implements ActionListener {
 
-    JLabel labelWelcome, labelDatos, labelN, labelM, labelPrimo, labelFibonacci, labelPotencia,
+    JLabel labelWelcome, labelDatos, labelM, labelPrimo, labelFibonacci, labelPotencia,
             labelSuma, labelFactorial;
     JTextField fieldN, fieldM;
     JTextArea areaPrimo, areaFibonacci, areaPotencia, areaSuma, areaFactorial;
     JScrollPane scrollPrimo, scrollFibonacci, scrollPotencia, scrollSuma, scrollFactorial;
     JButton buttonCalculate, buttonClear;
     int M = 0, N = 0;
-    String strPrimo = "", strFibonacci = "0, ", strPotencia = "", strFactorial = "";
-    int divisor = 1, multiplicador = 1, aux = 1, contador = 0;
+    String strPrimo = "", strFibonacci = "0, ", strPotencia = "", strFactorial = "",strSumaDigitos = "";
+    int divisor = 1, multiplicador = 1, aux = 1, contador = 0, resultNxM = 0;
     int num1 = 0, num2 = 1, result = 0;
-    int potencia = 0;
-    BigInteger BigFactorial = BigInteger.ZERO;
-    BigInteger BigPotencia = BigInteger.ZERO;
+    BigInteger BigFactorial = BigInteger.ONE;
+    BigInteger BigPotencia = BigInteger.ONE;
 
     public Principal(){
         setLayout(null);
+        getContentPane().setBackground(new Color(106, 225, 149));
         setSize(455, 470);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        labelWelcome = new JLabel("Bienvenido!");
-        labelWelcome.setBounds(20,45,300, 30);
+        labelWelcome = new JLabel("Recursividad!");
+        labelWelcome.setBounds(20,40,300, 30);
         labelWelcome.setFont(new Font("Andale mono", 1, 38));
         add(labelWelcome);
 
-        labelDatos = new JLabel("Introduce el valor de");
-        labelDatos.setBounds(20,120,200,30);
+        labelDatos = new JLabel("Introduce el valor de N");
+        labelDatos.setBounds(20,100,200,30);
         add(labelDatos);
 
-        labelN = new JLabel("N");
-        labelN.setBounds(170,120,100,30);
-        add(labelN);
-
         labelM = new JLabel("y M");
-        labelM.setBounds(220,120,50, 30);
+        labelM.setBounds(220,100,50, 30);
         add(labelM);
 
         labelPrimo = new JLabel("¿M es un nùmero primo?");
         labelPrimo.setBounds(20,160,200,30);
         add(labelPrimo);
 
-        labelFibonacci = new JLabel("Sucesion de Fibonacci");
+        labelFibonacci = new JLabel("Fibonacci hasta NxM");
         labelFibonacci.setBounds(20,200,200,30);
         add(labelFibonacci);
 
-        labelPotencia = new JLabel("Potencia de la matriz");
+        labelPotencia = new JLabel("Potencia de N elevado a M");
         labelPotencia.setBounds(20,240,200,30);
         add(labelPotencia);
 
-        labelSuma = new JLabel("La suma de la sucesion es");
+        labelSuma = new JLabel("Suma de los digitos de NxM");
         labelSuma.setBounds(20,280,200,30);
         add(labelSuma);
 
-        labelFactorial = new JLabel("Factorial de la sucesion");
+        labelFactorial = new JLabel("Factorial del numero N");
         labelFactorial.setBounds(20,320,200,30);
         add(labelFactorial);
 
         fieldN = new JTextField();
-        fieldN.setBounds(185,120,30,30);
+        fieldN.setBounds(185,100,30,30);
+        fieldN.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent k) {
+                int key = k.getKeyChar();
+                boolean validarNumero = key >= 48 && key <= 57;
+                if (!validarNumero) k.consume();
+                if (fieldN.getText().trim().length() == 2) k.consume();
+            }
+        });
         add(fieldN);
 
         fieldM = new JTextField();
-        fieldM.setBounds(250,120,30,30);
+        fieldM.setBounds(250,100,30,30);
+        fieldM.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent k) {
+                int key = k.getKeyChar();
+                boolean validarNumero = key >= 48 && key <= 57;
+                if (!validarNumero) k.consume();
+                if (fieldM.getText().trim().length() == 2) k.consume();
+            }
+        });
         add(fieldM);
 
         areaPrimo = new JTextArea();
@@ -130,9 +146,9 @@ public class Principal extends JFrame implements ActionListener {
             }
         } else {
             if (contador == 2){
-                strPrimo = "El numero " + M + ", es un numero primo";
+                strPrimo = M + " es un numero primo";
             } else {
-                strPrimo = "El numero " + M + ", no es un numero primo";
+                strPrimo = M + " no es un numero primo";
             }
         }
         contador = 0;
@@ -141,7 +157,7 @@ public class Principal extends JFrame implements ActionListener {
 
     public void  SecuenciaFibonacci(){
 
-        if ((num1 + num2) < N){
+        if ((num1 + num2) < resultNxM){
             result = num1 + num2;
             strFibonacci += result + ", ";
             num1 = num2;
@@ -156,31 +172,42 @@ public class Principal extends JFrame implements ActionListener {
 
     public void PotenciaNxM(){
         if (contador < M){
+            BigPotencia = BigPotencia.multiply(BigInteger.valueOf(N));
             aux *= N;
             contador++;
             PotenciaNxM();
         } else {
-            BigPotencia = BigPotencia.add(BigInteger.valueOf(aux));
             strPotencia = "" + BigPotencia;
             aux = 1;
             contador = 0;
-            BigPotencia = BigInteger.ZERO;
+            BigPotencia = BigInteger.ONE;
+        }
+    }
+
+    public void SumarDigitos(){
+        if (resultNxM > 0){
+            result += resultNxM % 10;
+            resultNxM = resultNxM / 10;
+            SumarDigitos();
+        } else {
+            strSumaDigitos = "" + result;
+            result = 0;
+            resultNxM = N * M;
         }
     }
 
     public void CalcularFactorial(){
         if(contador < N){
-           aux *= multiplicador;
+           BigFactorial = BigFactorial.multiply(BigInteger.valueOf(multiplicador));
            contador++;
            multiplicador++;
            CalcularFactorial();
         } else {
-            BigFactorial = BigFactorial.add(BigInteger.valueOf(aux));
             strFactorial = "" + BigFactorial;
             contador = 0;
             multiplicador = 1;
             aux = 1;
-            BigFactorial = BigInteger.ZERO;
+            BigFactorial = BigInteger.ONE;
         }
     }
 
@@ -190,15 +217,18 @@ public class Principal extends JFrame implements ActionListener {
         if (e.getSource() == buttonCalculate){
             N = Integer.parseInt(fieldN.getText());
             M = Integer.parseInt(fieldM.getText());
+            resultNxM = N * M;
             CalcularPrimo();
             SecuenciaFibonacci();
             PotenciaNxM();
+            SumarDigitos();
             CalcularFactorial();
             areaPrimo.setText(strPrimo);
             areaFibonacci.setText(strFibonacci);
             areaPotencia.setText(strPotencia);
+            areaSuma.setText(strSumaDigitos);
             areaFactorial.setText(strFactorial);
-
+            buttonCalculate.setEnabled(false);
             fieldN.setEnabled(false);
             fieldM.setEnabled(false);
         }
@@ -211,6 +241,7 @@ public class Principal extends JFrame implements ActionListener {
             areaPotencia.setText("");
             areaSuma.setText("");
             areaFactorial.setText("");
+            buttonCalculate.setEnabled(true);
             fieldN.setEnabled(true);
             fieldM.setEnabled(true);
         }
