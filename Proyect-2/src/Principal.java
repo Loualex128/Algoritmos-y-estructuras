@@ -29,17 +29,17 @@ public class Principal extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        labelWelcome = new JLabel("Bienvenido!");
-        labelWelcome.setBounds(20,45,300, 30);
+        labelWelcome = new JLabel("Recursividad!");
+        labelWelcome.setBounds(20,40,300, 30);
         labelWelcome.setFont(new Font("Andale mono", 1, 38));
         add(labelWelcome);
 
         labelDatos = new JLabel("Introduce el valor de N");
-        labelDatos.setBounds(20,120,200,30);
+        labelDatos.setBounds(20,100,200,30);
         add(labelDatos);
 
         labelM = new JLabel("y M");
-        labelM.setBounds(220,120,50, 30);
+        labelM.setBounds(220,100,50, 30);
         add(labelM);
 
         labelPrimo = new JLabel("¿M es un nùmero primo?");
@@ -63,7 +63,7 @@ public class Principal extends JFrame implements ActionListener {
         add(labelFactorial);
 
         fieldN = new JTextField();
-        fieldN.setBounds(185,120,30,30);
+        fieldN.setBounds(185,100,30,30);
         fieldN.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent k) {
@@ -76,7 +76,7 @@ public class Principal extends JFrame implements ActionListener {
         add(fieldN);
 
         fieldM = new JTextField();
-        fieldM.setBounds(250,120,30,30);
+        fieldM.setBounds(250,100,30,30);
         fieldM.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent k) {
